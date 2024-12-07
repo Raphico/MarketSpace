@@ -1,0 +1,20 @@
+#logs
+logs
+*.log
+
+node_modules
+.env
+*.local
+coverage
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+.cache/*
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

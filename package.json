@@ -1,0 +1,23 @@
+{
+  "name": "market-space",
+  "description": "A decentralized E-commerce API",
+  "version": "1.0.0",
+  "main": "./src/index.js",
+  "type": "module",
+  "scripts": {},
+  "keywords": [
+    "ecommerce",
+    "api",
+    "node",
+    "store"
+  ],
+  "author": {
+    "name": "raphico",
+    "url": "https://github.com/Raphico"
+  },
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/Raphico/market-space"
+  },
+  "license": "MIT"
+}
