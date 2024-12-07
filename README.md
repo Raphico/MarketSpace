@@ -2,7 +2,7 @@
 
 A decentralized E-commerce backend API where users can create their own stores, list products, and purchase items from other stores, while also allowing admin management and moderation.
 
-[![MarketSpace Use cases](./public/images/use-cases.png)](https://app.eraser.io/workspace/d93EiOmFJbvJZyf45RLj?origin=share)
+[![MarketSpace Use cases](public/images/use-cases.png)](https://app.eraser.io/workspace/d93EiOmFJbvJZyf45RLj?origin=share)
 
 ## Tech Stack
 
@@ -42,7 +42,7 @@ A decentralized E-commerce backend API where users can create their own stores, 
 
 ## Database Structure
 
-[![MarketSpace ER diagram](./public/images/er-diagram.png)](https://app.eraser.io/workspace/9oPlJPeyIX8b0l4G0mPk?origin=share)
+[![MarketSpace ER diagram](public/images/er-diagram.png)](https://app.eraser.io/workspace/9oPlJPeyIX8b0l4G0mPk?origin=share)
 
 ## Running Locally
 
