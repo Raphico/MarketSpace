@@ -4,7 +4,14 @@
   "version": "1.0.0",
   "main": "./src/index.js",
   "type": "module",
-  "scripts": {},
+  "scripts": {
+    "start": "node ./src/index.js",
+    "dev": "nodemon ./src/index.js",
+    "lint": "eslint --quiet",
+    "format": "prettier --check . --cache",
+    "format:write": "prettier --write . --cache",
+    "check": "npm run lint && npm run format"
+  },
   "keywords": [
     "ecommerce",
     "api",
@@ -19,5 +26,14 @@
     "type": "github",
     "url": "https://github.com/Raphico/market-space"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@eslint/js": "^9.16.0",
+    "@ianvs/prettier-plugin-sort-imports": "^4.4.0",
+    "eslint": "^9.16.0",
+    "eslint-config-prettier": "^9.1.0",
+    "globals": "^15.13.0",
+    "nodemon": "^3.1.7",
+    "prettier": "^3.4.2"
+  }
 }
