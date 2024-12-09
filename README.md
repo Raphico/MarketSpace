@@ -59,10 +59,10 @@ A decentralized E-commerce backend API where users can create their own stores, 
   npm install
 ```
 
-3. copy `.env.example` to `.env` and update the variables
+3. copy `.env.sample` to `.env` and update the variables
 
 ```bash
-  cp .env.example .env
+  cp .env.sample .env
 ```
 
 4. start the development server
