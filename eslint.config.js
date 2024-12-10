@@ -17,4 +17,10 @@ export default [
         ignores: ["node_modules", ".github", ".vscode", "coverage"],
     },
     pluginJs.configs.recommended,
+    {
+        rules: {
+            eqeqeq: "off",
+            "no-unused-vars": "warn",
+        },
+    },
 ];
