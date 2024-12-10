@@ -74,7 +74,7 @@ A decentralized E-commerce backend API where users can create their own stores, 
 5. push database schema
 
 ```bash
-  npm run db:push
+  npx drizzle-kit push
 ```
 
 ## License
