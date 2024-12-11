@@ -1,8 +1,8 @@
 export class ApiError extends Error {
-    constructor(
+    constructor({
         message = "something went wrong. Please, try again later",
-        statusCode
-    ) {
+        statusCode,
+    }) {
         super(message);
 
         this.statusCode = statusCode;
