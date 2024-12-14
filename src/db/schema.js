@@ -14,6 +14,7 @@ import {
 
 export const statusEnum = pgEnum("status", ["pending", "shipped", "delivered"]);
 export const roleEnum = pgEnum("role", ["user", "moderator"]);
+export const strategyEnum = pgEnum("strategy", ["google", "email_password"]);
 
 const timestamps = {
     createdAt: timestamp("created_at").notNull().defaultNow(),
@@ -29,17 +30,18 @@ export const users = pgTable(
         lastName: varchar("last_name", { length: 50 }),
         email: varchar("email", { length: 255 }).notNull().unique(),
         isEmailVerified: boolean().notNull().default(false),
-        emailVerificationToken: varchar("email_verification_token", {
-            length: 64,
-        }),
-        passwordResetToken: varchar("password_reset_token", {
-            length: 64,
-        }),
         password: varchar("password", { length: 255 }).notNull(),
         image: text("image"),
         role: roleEnum("role").notNull().default("user"),
         stripeCustomerId: varchar("stripe_customer_id", {
             length: 255,
+        }),
+        strategy: strategyEnum("strategy").notNull().default("email_password"),
+        emailVerificationToken: varchar("email_verification_token", {
+            length: 64,
+        }),
+        passwordResetToken: varchar("password_reset_token", {
+            length: 64,
         }),
         emailVerificationExpiry: timestamp("email_verification_expiry"),
         passwordResetExpiry: timestamp("password_reset_expiry"),
