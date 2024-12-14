@@ -61,7 +61,7 @@ export async function sendEmail({ email, subject, emailContent }) {
  * @returns {Mailgen.Content}
  */
 export function emailVerificationTemplate({ username, verificationUrl }) {
-    const expiresIn = VERIFICATION_TOKEN_EXPIRY / 1000 / 60;
+    const expiresIn = VERIFICATION_TOKEN_EXPIRY / 60000;
 
     return {
         body: {

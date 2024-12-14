@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
+import requestIp from "request-ip";
 import { errorHandler } from "./middlewares/error.middleware.js";
+import { limiter } from "./middlewares/rate-limiter.middleware.js";
 import authRoute from "./routes/auth.route.js";
 import healthRoute from "./routes/health.route.js";
 import { morganMiddleware } from "./loggers/morgan.logger.js";
@@ -10,8 +12,11 @@ export const app = express();
 app.use(morganMiddleware);
 app.use(cors());
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(requestIp.mw());
+app.use(limiter);
+
+app.use(express.json({ limit: "16kb" }));
+app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 
 app.use("/api/v1/health", healthRoute);
 app.use("/api/v1/auth", authRoute);
