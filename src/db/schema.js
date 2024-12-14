@@ -13,7 +13,7 @@ import {
 } from "drizzle-orm/pg-core";
 
 export const statusEnum = pgEnum("status", ["pending", "shipped", "delivered"]);
-export const roleEnum = pgEnum("role", ["user", "admin"]);
+export const roleEnum = pgEnum("role", ["user", "moderator"]);
 
 const timestamps = {
     createdAt: timestamp("created_at").notNull().defaultNow(),
@@ -24,17 +24,25 @@ export const users = pgTable(
     "users",
     {
         id: varchar("id", { length: 25 }).$default(createId).primaryKey(),
-        username: varchar("username", { length: 50 }).notNull(),
+        username: varchar("username", { length: 50 }).notNull().unique(),
         firstName: varchar("first_name", { length: 50 }),
         lastName: varchar("last_name", { length: 50 }),
-        email: varchar("email", { length: 255 }).notNull(),
-        isEmailVerified: boolean().notNull().default(true),
+        email: varchar("email", { length: 255 }).notNull().unique(),
+        isEmailVerified: boolean().notNull().default(false),
+        emailVerificationToken: varchar("email_verification_token", {
+            length: 64,
+        }),
+        passwordResetToken: varchar("password_reset_token", {
+            length: 64,
+        }),
         password: varchar("password", { length: 255 }).notNull(),
         image: text("image"),
         role: roleEnum("role").notNull().default("user"),
         stripeCustomerId: varchar("stripe_customer_id", {
             length: 255,
         }),
+        emailVerificationExpiry: timestamp("email_verification_expiry"),
+        passwordResetExpiry: timestamp("password_reset_expiry"),
         ...timestamps,
     },
     (table) => [uniqueIndex("stripe_customer_idx").on(table.stripeCustomerId)]

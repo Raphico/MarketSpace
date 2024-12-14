@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { errorHandler } from "./middlewares/error.middleware.js";
+import authRoute from "./routes/auth.route.js";
 import healthRoute from "./routes/health.route.js";
 import { morganMiddleware } from "./loggers/morgan.logger.js";
 
@@ -13,5 +14,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/v1/health", healthRoute);
+app.use("/api/v1/auth", authRoute);
 
 app.use(errorHandler);
