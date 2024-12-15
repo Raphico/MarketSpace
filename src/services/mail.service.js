@@ -81,3 +81,29 @@ export function emailVerificationTemplate({ username, verificationUrl }) {
         },
     };
 }
+
+/**
+ * Generates the email content template for password reset
+ *
+ * @export
+ * @param {{ username: string; passwordResetUrl: string }} options
+ * @returns {Mailgen.Content}
+ */
+export function passwordResetTemplate({ username, passwordResetUrl }) {
+    const expiresIn = VERIFICATION_TOKEN_EXPIRY / 60000;
+
+    return {
+        body: {
+            name: username,
+            intro: "We received a request to reset your password for your MarketSpace account. Click the button below to reset your password",
+            action: {
+                button: {
+                    text: "Reset your password",
+                    link: passwordResetUrl,
+                    color: "#22BC66",
+                },
+            },
+            outro: `For security reasons, this link will expire in ${expiresIn} minutes.`,
+        },
+    };
+}

@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import {
-    emailVerificationTemplate,
+    passwordResetTemplate,
     sendEmail,
 } from "../../services/mail.service.js";
 import { generateVerificationToken } from "../../services/token.service.js";
@@ -11,13 +11,8 @@ import { emailSchema } from "../../validators/auth.validator.js";
 import { db } from "../../db/index.js";
 import { users } from "../../db/schema.js";
 
-/**
- * This controller handles the process of resending an email verification link to users who
- * may not have received it initially. It is designed to be called when a user has failed to
- * verify their email after registration.
- */
-export const resendEmailVerification = asyncHandler(
-    async function resendEmailVerification(request, response) {
+export const requestResetPassword = asyncHandler(
+    async function requestResetPassword(request, response) {
         const { email } = request.body;
 
         const { error } = emailSchema.validate(email);
@@ -30,12 +25,11 @@ export const resendEmailVerification = asyncHandler(
         }
 
         const user = await db.query.users.findFirst({
-            column: {
+            columns: {
                 id: true,
                 username: true,
-                isEmailVerified: true,
             },
-            where: eq(users.email, email),
+            where: eq(email, users.email),
         });
 
         if (!user) {
@@ -45,38 +39,32 @@ export const resendEmailVerification = asyncHandler(
             });
         }
 
-        if (user.isEmailVerified) {
-            throw new ApiError({
-                message: "email is already verified",
-                statusCode: 409,
-            });
-        }
-
         const { unHashedToken, hashedToken, expiresAt } =
             generateVerificationToken();
 
         await db
             .update(users)
             .set({
-                emailVerificationToken: hashedToken,
-                emailVerificationExpiry: expiresAt,
+                passwordResetToken: hashedToken,
+                passwordResetExpiry: expiresAt,
             })
             .where(eq(users.email, email));
 
         await sendEmail({
             email,
-            subject: "MarketSpace Email verification",
-            emailContent: emailVerificationTemplate({
+            subject: "Reset your password",
+            emailContent: passwordResetTemplate({
                 username: user.username,
-                verificationUrl: `${request.protocol}://${request.get("host")}/api/v1/auth/verify-email/${unHashedToken}`,
+                // Frontend will send the below token with the new password in the request body to the backend reset password endpoint
+                passwordResetUrl: `${process.env.CLIENT_URL}/reset-password/${unHashedToken}`,
             }),
         });
 
         response.status(202).json(
             new ApiResponse({
                 data: null,
+                message: "password reset link has been sent to your email",
                 status: "ok",
-                message: "a verification email has been sent",
             })
         );
     }
