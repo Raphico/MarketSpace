@@ -16,13 +16,13 @@ export function generateVerificationToken() {
 }
 
 export function generateAccessToken(data) {
-    return jwt.sign(data, process.env.JWT_SECRET, {
+    return jwt.sign(data, process.env.ACCESS_TOKEN_SECRET, {
         expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
     });
 }
 
 export function generateRefreshToken(data) {
-    return jwt.sign(data, process.env.JWT_SECRET, {
+    return jwt.sign(data, process.env.REFRESH_TOKEN_SECRET, {
         expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
     });
 }

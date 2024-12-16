@@ -20,7 +20,7 @@ export const verifyJWT = asyncHandler(
 
         const token = request.headers.authorization.replace("Bearer ", "");
 
-        const isBlacklisted = await redisClient.get(token);
+        const isBlacklisted = await redisClient.get(`accessToken:${token}`);
         if (isBlacklisted) {
             throw new ApiError({
                 statusCode: 401,
@@ -29,7 +29,7 @@ export const verifyJWT = asyncHandler(
         }
 
         try {
-            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
 
             const user = await db.query.users.findFirst({
                 columns: {
@@ -47,17 +47,13 @@ export const verifyJWT = asyncHandler(
             request.user = decoded;
             next();
         } catch (error) {
-            if (error.name === "TokenExpiredError") {
+            if (
+                error.name === "TokenExpiredError" ||
+                error.name === "JsonWebTokenError"
+            ) {
                 throw new ApiError({
                     statusCode: 401,
-                    message: "access token has expired",
-                });
-            }
-
-            if (error.name === "JsonWebTokenError") {
-                throw new ApiError({
-                    statusCode: 401,
-                    message: "invalid access token",
+                    message: "token invalid",
                 });
             }
 

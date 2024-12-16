@@ -4,16 +4,18 @@ import { ApiResponse } from "../../utils/api-response.js";
 import { asyncHandler } from "../../utils/async-handler.js";
 
 export const logout = asyncHandler(async function logout(request, response) {
-    const token = request.headers.authorization.replace("Bearer ", "");
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const accessToken = request.headers.authorization.replace("Bearer ", "");
+    const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
     const tokenExpiry = decoded.exp * 1000;
     const ttl = tokenExpiry - Date.now();
 
     if (ttl > 0) {
-        await redisClient.set(token, "blacklisted", {
+        await redisClient.set(`accessToken:${accessToken}`, "blacklisted", {
             PX: ttl,
         });
     }
+
+    await redisClient.del(`user:${decoded.id}:refreshToken`);
 
     response
         .status(200)

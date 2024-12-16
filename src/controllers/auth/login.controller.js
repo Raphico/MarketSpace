@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import { eq } from "drizzle-orm";
+import { redisClient } from "../../services/redis.service.js";
 import {
     generateAccessToken,
     generateRefreshToken,
@@ -60,6 +61,8 @@ export const login = asyncHandler(async function login(request, response) {
     const refreshToken = generateRefreshToken({
         id: user.id,
     });
+
+    await redisClient.set(`user:${user.id}:refreshToken`, refreshToken);
 
     response
         .status(200)
