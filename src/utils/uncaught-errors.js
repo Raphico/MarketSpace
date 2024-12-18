@@ -9,7 +9,7 @@ process.on("uncaughtException", (error, origin) => {
 });
 
 process.on("unhandledRejection", (reason, promise) => {
-    logger.error(`unhandledRejection: ${promise}`, {
+    logger.error(`unhandledRejection: ${reason}`, {
         promise,
         reason,
     });

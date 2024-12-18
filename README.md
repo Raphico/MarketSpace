@@ -25,7 +25,7 @@ A decentralized E-commerce backend API where users can create their own stores, 
 
 ## Features to be implemented
 
-- [] implement user authentication
+- [x] implement user authentication
 - [] implement user information update
 - [] implement store creation and management
 - [] implement product creation and management

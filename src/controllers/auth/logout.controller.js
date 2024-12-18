@@ -5,8 +5,7 @@ import { asyncHandler } from "../../utils/async-handler.js";
 
 export const logout = asyncHandler(async function logout(request, response) {
     const accessToken = request.headers.authorization.replace("Bearer ", "");
-    const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
-    const tokenExpiry = decoded.exp * 1000;
+    const tokenExpiry = request.user.exp * 1000;
     const ttl = tokenExpiry - Date.now();
 
     if (ttl > 0) {
@@ -15,14 +14,13 @@ export const logout = asyncHandler(async function logout(request, response) {
         });
     }
 
-    await redisClient.del(`user:${decoded.id}:refreshToken`);
+    await redisClient.del(`user:${request.user.id}:refreshToken`);
 
     response
         .status(200)
         .clearCookie("refreshToken", {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
-            sameSite: "strict",
         })
         .json(
             new ApiResponse({

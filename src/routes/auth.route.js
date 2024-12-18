@@ -9,6 +9,9 @@ import { resendEmailVerification } from "../controllers/auth/resend-email-verifi
 import { resetPassword } from "../controllers/auth/reset-password.controller.js";
 import { signup } from "../controllers/auth/signup.controller.js";
 import { verifyEmail } from "../controllers/auth/verify-email.controller.js";
+import "../services/passport.service.js";
+import passport from "passport";
+import { googleLogin } from "../controllers/auth/google-login.controller.js";
 
 const router = Router();
 
@@ -24,5 +27,18 @@ router.post("/resend-email-verification", mailLimiter, resendEmailVerification);
 router.get("/refresh-token", refreshAccessToken);
 
 router.get("/logout", verifyJWT, logout);
+
+router.get(
+    "/google",
+    passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+router.get(
+    "/google/callback",
+    passport.authenticate("google", {
+        session: false,
+    }),
+    googleLogin
+);
 
 export default router;

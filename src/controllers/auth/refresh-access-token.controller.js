@@ -73,7 +73,6 @@ export const refreshAccessToken = asyncHandler(
                 .cookie("refreshToken", refreshToken, {
                     httpOnly: true,
                     secure: process.env.NODE_ENV === "production",
-                    sameSite: "strict",
                 })
                 .json(
                     new ApiResponse({

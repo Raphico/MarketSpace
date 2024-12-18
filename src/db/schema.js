@@ -30,7 +30,7 @@ export const users = pgTable(
         lastName: varchar("last_name", { length: 50 }),
         email: varchar("email", { length: 255 }).notNull().unique(),
         isEmailVerified: boolean().notNull().default(false),
-        password: varchar("password", { length: 255 }).notNull(),
+        password: varchar("password", { length: 255 }),
         image: text("image"),
         role: roleEnum("role").notNull().default("user"),
         stripeCustomerId: varchar("stripe_customer_id", {
