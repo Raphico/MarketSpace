@@ -1,4 +1,5 @@
 import express from "express";
+import cookieParser from "cookie-parser";
 import cors from "cors";
 import helmet from "helmet";
 import passport from "passport";
@@ -7,6 +8,7 @@ import { errorHandler } from "./middlewares/error.middleware.js";
 import { limiter } from "./middlewares/rate-limiter.middleware.js";
 import authRoute from "./routes/auth.route.js";
 import healthRoute from "./routes/health.route.js";
+import userRoute from "./routes/user.route.js";
 import { morganMiddleware } from "./loggers/morgan.logger.js";
 
 export const app = express();
@@ -19,6 +21,7 @@ app.use(cors());
 app.use(requestIp.mw());
 app.use(limiter);
 
+app.use(cookieParser());
 app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 
@@ -26,5 +29,6 @@ app.use(passport.initialize());
 
 app.use("/api/v1/health", healthRoute);
 app.use("/api/v1/auth", authRoute);
+app.use("/api/v1/user", userRoute);
 
 app.use(errorHandler);

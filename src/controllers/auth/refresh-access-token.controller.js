@@ -13,7 +13,7 @@ import { users } from "../../db/schema.js";
 
 export const refreshAccessToken = asyncHandler(
     async function refreshAccessToken(request, response) {
-        const { refreshToken: incomingRefreshToken } = request.cookies;
+        const incomingRefreshToken = request.cookies?.refreshToken;
 
         if (!incomingRefreshToken) {
             throw new ApiError({
