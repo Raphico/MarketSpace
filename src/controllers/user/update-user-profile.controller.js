@@ -37,7 +37,7 @@ export const updateUserProfile = asyncHandler(
             throw error;
         }
 
-        response.status(200).json(
+        response.status(202).json(
             new ApiResponse({
                 data: value,
                 message: "profile update successful",
