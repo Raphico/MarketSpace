@@ -45,6 +45,7 @@
   "dependencies": {
     "@paralleldrive/cuid2": "^2.2.2",
     "bcrypt": "^5.1.1",
+    "cloudinary": "^2.5.1",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
@@ -56,6 +57,7 @@
     "jsonwebtoken": "^9.0.2",
     "mailgen": "^2.0.28",
     "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.16",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",

@@ -1,4 +1,5 @@
 import { ApiError } from "../utils/api-error.js";
+import { logger } from "../loggers/winston.logger.js";
 import { env } from "../config.js";
 
 export function errorHandler(error, request, response, next) {
@@ -7,6 +8,8 @@ export function errorHandler(error, request, response, next) {
         error instanceof ApiError
             ? error.message
             : "something went wrong. Please, try again later";
+
+    logger.error(errorMessage);
 
     response.status(statusCode).json({
         data: null,

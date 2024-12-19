@@ -19,6 +19,7 @@ A decentralized E-commerce backend API where users can create their own stores, 
 - **Payment Infrastructure:** [stripe](https://docs.stripe.com/)
 - **File uploads:** [Multer](https://www.npmjs.com/package/multer)
 - **E2E testing:** [Playwright](https://playwright.dev/)
+- **Cloud-storage:** [cloudinary](https://cloudinary.com/)
 - **API Testing:** [Supertest](https://www.npmjs.com/package/supertest)
 - **Unit Testing:** [jest](https://jestjs.io/)
 - **Logging:** [Winston](https://www.npmjs.com/package/winston) and [Morgan](https://github.com/expressjs/morgan)
@@ -26,7 +27,7 @@ A decentralized E-commerce backend API where users can create their own stores, 
 ## Features to be implemented
 
 - [x] implement user authentication
-- [] implement user information update
+- [x] implement user information update
 - [] implement store creation and management
 - [] implement product creation and management
 - [] implement product and store search and filtering

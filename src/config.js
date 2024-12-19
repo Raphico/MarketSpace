@@ -37,6 +37,10 @@ const envSchema = Joi.object({
 
     CLIENT_URL: Joi.string().uri(),
     CLIENT_SSO_REDIRECT_URL: Joi.string().uri(),
+
+    CLOUDINARY_API_KEY: Joi.string(),
+    CLOUDINARY_CLOUD_NAME: Joi.string(),
+    CLOUDINARY_API_SECRET: Joi.string(),
 });
 
 export const { value: env } = envSchema.validate({
@@ -64,4 +68,8 @@ export const { value: env } = envSchema.validate({
 
     CLIENT_URL: process.env.CLIENT_URL,
     CLIENT_SSO_REDIRECT_URL: process.env.CLIENT_SSO_REDIRECT_URL,
+
+    CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
+    CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME,
+    CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
 });
