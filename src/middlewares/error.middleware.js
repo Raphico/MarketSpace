@@ -1,4 +1,5 @@
 import { ApiError } from "../utils/api-error.js";
+import { env } from "../config.js";
 
 export function errorHandler(error, request, response, next) {
     const statusCode = error instanceof ApiError ? error.statusCode : 500;
@@ -11,8 +12,6 @@ export function errorHandler(error, request, response, next) {
         data: null,
         status: "error",
         message: errorMessage,
-        ...(process.env.NODE_ENV === "production"
-            ? {}
-            : { stack: error.stack }),
+        ...(env.NODE_ENV === "production" ? {} : { stack: error.stack }),
     });
 }

@@ -1,7 +1,7 @@
 import Mailgen from "mailgen";
 import nodemailer from "nodemailer";
 import { logger } from "../loggers/winston.logger.js";
-import { VERIFICATION_TOKEN_EXPIRY } from "../constants.js";
+import { env } from "../config.js";
 
 /**
  * Sends an email using the provided details and Mailgen content
@@ -21,12 +21,12 @@ export async function sendEmail({ email, subject, emailContent }) {
         });
 
         const transporter = nodemailer.createTransport({
-            host: process.env.MAILTRAP_SMTP_HOST,
-            port: process.env.MAILTRAP_SMTP_PORT,
-            secure: process.env.MAILTRAP_SMTP_PORT == "465",
+            host: env.MAILTRAP_SMTP_HOST,
+            port: env.MAILTRAP_SMTP_PORT,
+            secure: env.MAILTRAP_SMTP_PORT == "465",
             auth: {
-                user: process.env.MAILTRAP_SMTP_USERNAME,
-                pass: process.env.MAILTRAP_SMTP_PASSWORD,
+                user: env.MAILTRAP_SMTP_USERNAME,
+                pass: env.MAILTRAP_SMTP_PASSWORD,
             },
         });
 
@@ -37,7 +37,7 @@ export async function sendEmail({ email, subject, emailContent }) {
         const emailText = mailGenerator.generatePlaintext(emailContent);
 
         transporter.sendMail({
-            from: "mail.marketspace@gmail.com",
+            from: env.SENDER_EMAIL_ADDRESS,
             to: email,
             subject,
             text: emailText,
@@ -61,7 +61,7 @@ export async function sendEmail({ email, subject, emailContent }) {
  * @returns {Mailgen.Content}
  */
 export function emailVerificationTemplate({ username, verificationUrl }) {
-    const expiresIn = VERIFICATION_TOKEN_EXPIRY / 60000;
+    const expiresIn = env.VERIFICATION_TOKEN_EXPIRY / 60000;
 
     return {
         body: {
@@ -90,7 +90,7 @@ export function emailVerificationTemplate({ username, verificationUrl }) {
  * @returns {Mailgen.Content}
  */
 export function passwordResetTemplate({ username, passwordResetUrl }) {
-    const expiresIn = VERIFICATION_TOKEN_EXPIRY / 60000;
+    const expiresIn = env.VERIFICATION_TOKEN_EXPIRY / 60000;
 
     return {
         body: {

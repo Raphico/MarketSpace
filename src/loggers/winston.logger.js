@@ -1,4 +1,5 @@
 import winston from "winston";
+import { env } from "../config.js";
 
 const colors = {
     error: "red",
@@ -21,7 +22,7 @@ export const logger = winston.createLogger({
     ),
     transports: [
         new winston.transports.Console({
-            level: process.env.NODE_ENV === "development" ? "silly" : "warn",
+            level: env.NODE_ENV === "production" ? "http" : "silly",
             format: winston.format.colorize({ all: true }),
         }),
         new winston.transports.File({

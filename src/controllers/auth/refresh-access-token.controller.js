@@ -10,6 +10,7 @@ import { ApiResponse } from "../../utils/api-response.js";
 import { asyncHandler } from "../../utils/async-handler.js";
 import { db } from "../../db/index.js";
 import { users } from "../../db/schema.js";
+import { env } from "../../config.js";
 
 export const refreshAccessToken = asyncHandler(
     async function refreshAccessToken(request, response) {
@@ -25,7 +26,7 @@ export const refreshAccessToken = asyncHandler(
         try {
             const decoded = jwt.verify(
                 incomingRefreshToken,
-                process.env.REFRESH_TOKEN_SECRET
+                env.REFRESH_TOKEN_SECRET
             );
 
             const user = await db.query.users.findFirst({
@@ -72,7 +73,7 @@ export const refreshAccessToken = asyncHandler(
                 .status(200)
                 .cookie("refreshToken", refreshToken, {
                     httpOnly: true,
-                    secure: process.env.NODE_ENV === "production",
+                    secure: env.NODE_ENV === "production",
                 })
                 .json(
                     new ApiResponse({

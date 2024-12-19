@@ -4,14 +4,14 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import { ApiError } from "../utils/api-error.js";
 import { db } from "../db/index.js";
 import { users } from "../db/schema.js";
-import { STRATEGY } from "../constants.js";
+import { env, STRATEGY } from "../config.js";
 
 passport.use(
     new GoogleStrategy(
         {
-            clientID: process.env.GOOGLE_CLIENT_ID,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-            callbackURL: process.env.GOOGLE_CALLBACK_URL,
+            clientID: env.GOOGLE_CLIENT_ID,
+            clientSecret: env.GOOGLE_CLIENT_SECRET,
+            callbackURL: env.GOOGLE_CALLBACK_URL,
         },
         async function verify(_, __, profile, next) {
             const user = await db.query.users.findFirst({

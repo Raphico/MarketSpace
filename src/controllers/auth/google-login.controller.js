@@ -3,6 +3,7 @@ import {
     generateRefreshToken,
 } from "../../services/token.service.js";
 import { asyncHandler } from "../../utils/async-handler.js";
+import { env } from "../../config.js";
 
 export const googleLogin = asyncHandler(
     async function googleLogin(request, response) {
@@ -25,7 +26,7 @@ export const googleLogin = asyncHandler(
                 secure: process.NODE_ENV === "production",
             })
             .redirect(
-                `${process.env.CLIENT_SSO_REDIRECT_URL}?accessToken=${accessToken}`
+                `${env.CLIENT_SSO_REDIRECT_URL}?accessToken=${accessToken}`
             );
     }
 );

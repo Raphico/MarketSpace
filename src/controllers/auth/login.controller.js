@@ -11,6 +11,7 @@ import { asyncHandler } from "../../utils/async-handler.js";
 import { loginSchema } from "../../validators/auth.validator.js";
 import { db } from "../../db/index.js";
 import { users } from "../../db/schema.js";
+import { env } from "../../config.js";
 
 export const login = asyncHandler(async function login(request, response) {
     const { email, password } = request.body;
@@ -68,7 +69,7 @@ export const login = asyncHandler(async function login(request, response) {
         .status(200)
         .cookie("refreshToken", refreshToken, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
+            secure: env.NODE_ENV === "production",
         })
         .json(
             new ApiResponse({

@@ -5,6 +5,7 @@ import { ApiError } from "../utils/api-error.js";
 import { asyncHandler } from "../utils/async-handler.js";
 import { db } from "../db/index.js";
 import { users } from "../db/schema.js";
+import { env } from "../config.js";
 
 export const verifyJWT = asyncHandler(
     async function verifyJWT(request, response, next) {
@@ -29,7 +30,7 @@ export const verifyJWT = asyncHandler(
         }
 
         try {
-            const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+            const decoded = jwt.verify(token, env.ACCESS_TOKEN_SECRET);
 
             const user = await db.query.users.findFirst({
                 columns: {

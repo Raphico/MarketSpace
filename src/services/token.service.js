@@ -1,6 +1,6 @@
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
-import { VERIFICATION_TOKEN_EXPIRY } from "../constants.js";
+import { env } from "../config.js";
 
 /**@description generates temporary tokens for email verification, password reset etc. */
 export function generateVerificationToken() {
@@ -10,19 +10,19 @@ export function generateVerificationToken() {
         .update(unHashedToken)
         .digest("hex");
 
-    const expiresAt = new Date(Date.now() + VERIFICATION_TOKEN_EXPIRY);
+    const expiresAt = new Date(Date.now() + env.VERIFICATION_TOKEN_EXPIRY);
 
     return { unHashedToken, hashedToken, expiresAt };
 }
 
 export function generateAccessToken(data) {
-    return jwt.sign(data, process.env.ACCESS_TOKEN_SECRET, {
-        expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
+    return jwt.sign(data, env.ACCESS_TOKEN_SECRET, {
+        expiresIn: env.ACCESS_TOKEN_EXPIRY,
     });
 }
 
 export function generateRefreshToken(data) {
-    return jwt.sign(data, process.env.REFRESH_TOKEN_SECRET, {
-        expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
+    return jwt.sign(data, env.REFRESH_TOKEN_SECRET, {
+        expiresIn: env.REFRESH_TOKEN_EXPIRY,
     });
 }

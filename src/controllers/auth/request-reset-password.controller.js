@@ -10,6 +10,7 @@ import { asyncHandler } from "../../utils/async-handler.js";
 import { emailSchema } from "../../validators/auth.validator.js";
 import { db } from "../../db/index.js";
 import { users } from "../../db/schema.js";
+import { env } from "../../config.js";
 
 export const requestResetPassword = asyncHandler(
     async function requestResetPassword(request, response) {
@@ -56,7 +57,7 @@ export const requestResetPassword = asyncHandler(
             emailContent: passwordResetTemplate({
                 username: user.username,
                 // Frontend will send the below token with the new password in the request body to the backend reset password endpoint
-                passwordResetUrl: `${process.env.CLIENT_URL}/reset-password/${unHashedToken}`,
+                passwordResetUrl: `${env.CLIENT_URL}/reset-password/${unHashedToken}`,
             }),
         });
 
