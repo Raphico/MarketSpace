@@ -8,9 +8,11 @@ import { updateUserProfile } from "../controllers/user/update-user-profile.contr
 
 const router = Router();
 
-router.get("/me", verifyJWT, getUserProfile);
-router.patch("/update", verifyJWT, updateUserProfile);
-router.patch("/change-password", verifyJWT, changePassword);
-router.patch("/change-image", verifyJWT, upload.single("image"), changeImage);
+router
+    .route("/")
+    .get(verifyJWT, getUserProfile)
+    .patch(verifyJWT, updateUserProfile);
+router.patch("/password", verifyJWT, changePassword);
+router.patch("/image", verifyJWT, upload.single("image"), changeImage);
 
 export default router;

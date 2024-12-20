@@ -18,11 +18,11 @@ const router = Router();
 router.post("/signup", signup);
 router.post("/login", login);
 
-router.post("/request-reset-password", mailLimiter, requestResetPassword);
-router.post("/reset-password/:resetToken", resetPassword);
+router.post("/password/reset", mailLimiter, requestResetPassword);
+router.post("/password/reset/:resetToken", resetPassword);
 
-router.get("/verify-email/:verificationToken", verifyEmail);
-router.post("/resend-email-verification", mailLimiter, resendEmailVerification);
+router.get("/email/verification/:verificationToken", verifyEmail);
+router.post("/email/verification/resend", mailLimiter, resendEmailVerification);
 
 router.get("/refresh-token", refreshAccessToken);
 
