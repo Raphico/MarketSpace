@@ -8,6 +8,7 @@ import { errorHandler } from "./middlewares/error.middleware.js";
 import { limiter } from "./middlewares/rate-limiter.middleware.js";
 import authRoute from "./routes/auth.route.js";
 import healthRoute from "./routes/health.route.js";
+import storeRoute from "./routes/store.route.js";
 import userRoute from "./routes/user.route.js";
 import { morganMiddleware } from "./loggers/morgan.logger.js";
 
@@ -30,5 +31,6 @@ app.use(passport.initialize());
 app.use("/api/v1/health", healthRoute);
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/user", userRoute);
+app.use("/api/v1/store", storeRoute);
 
 app.use(errorHandler);

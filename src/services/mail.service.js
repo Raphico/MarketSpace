@@ -107,3 +107,38 @@ export function passwordResetTemplate({ username, passwordResetUrl }) {
         },
     };
 }
+
+/**
+ * Generates the email content template for when a user creates a new store
+ *
+ * @export
+ * @param {{ username: string; storeName: string; connectStripeAccountUrl: string }} options
+ * @returns {Mailgen.Content}
+ */
+export function completeStoreSetupTemplate({
+    username,
+    storeName,
+    connectStripeAccountUrl,
+}) {
+    return {
+        body: {
+            name: username,
+            intro: [
+                `Congratulations on creating your store, ${storeName}!`,
+                "To activate your store and start accepting payments from your customers, you'll need to connect your store to a Stripe account. Without this connection, you won’t be able to process transactions.",
+                "Click the button below to connect your Stripe account",
+            ],
+            action: {
+                button: {
+                    text: "Connect Stripe Account",
+                    link: connectStripeAccountUrl,
+                    color: "#22BC66",
+                },
+            },
+            outro: [
+                "If you have any questions or need assistance, feel free to reach out to us",
+                "Happy selling!",
+            ],
+        },
+    };
+}

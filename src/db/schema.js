@@ -55,17 +55,17 @@ export const stores = pgTable("stores", {
     userId: varchar("user_id", { length: 25 })
         .notNull()
         .references(() => users.id),
-    categoryId: varchar("category_id", { length: 25 })
-        .notNull()
-        .references(() => categories.id),
+    categoryId: varchar("category_id", { length: 25 }).references(
+        () => categories.id
+    ),
     stripeAccountId: varchar("stripe_account_id", {
         length: 255,
-    }).notNull(),
+    }),
     name: varchar("name", { length: 255 }).notNull(),
     description: text("description"),
     banner: text("banner"),
     logo: text("logo"),
-    isActive: boolean("is_active").default(true),
+    isActive: boolean("is_active").default(false),
     ...timestamps,
 });
 

@@ -8,20 +8,20 @@ import { db } from "../../db/index.js";
 import { users } from "../../db/schema.js";
 import { logger } from "../../loggers/winston.logger.js";
 import "../../services/cloudinary.service.js";
+import { uploadFile } from "../../services/cloudinary.service.js";
 
 export const changeImage = asyncHandler(
     async function changeImage(request, response) {
+        if (!request.file) {
+            throw new ApiError({
+                message: "Please upload a file in the 'image' field",
+                statusCode: 400,
+            });
+        }
+
         const readable = stream.Readable.from(request.file.buffer);
 
-        const uploadResult = await new Promise((resolve, reject) => {
-            const uploadReadable = cloudinary.uploader.upload_stream(
-                (error, uploadResult) => {
-                    return uploadResult ? resolve(uploadResult) : reject(error);
-                }
-            );
-
-            readable.pipe(uploadReadable);
-        });
+        const uploadResult = await uploadFile(readable);
 
         const optimizedUrl = cloudinary.url(uploadResult.public_id, {
             fetch_format: "auto",
