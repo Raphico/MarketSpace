@@ -11,7 +11,8 @@
     "format": "prettier --check . --cache",
     "format:write": "prettier --write . --cache",
     "check": "npm run lint && npm run format",
-    "prepare": "husky"
+    "prepare": "husky",
+    "db:seed": "dotenv node src/db/seeds/index.js"
   },
   "keywords": [
     "ecommerce",
@@ -32,7 +33,9 @@
     "@commitlint/cli": "^19.6.0",
     "@commitlint/config-conventional": "^19.6.0",
     "@eslint/js": "^9.16.0",
+    "@faker-js/faker": "^9.3.0",
     "@ianvs/prettier-plugin-sort-imports": "^4.4.0",
+    "dotenv-cli": "^7.4.4",
     "drizzle-kit": "^0.30.0",
     "eslint": "^9.16.0",
     "eslint-config-prettier": "^9.1.0",

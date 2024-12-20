@@ -41,9 +41,13 @@ const envSchema = Joi.object({
     CLOUDINARY_API_KEY: Joi.string(),
     CLOUDINARY_CLOUD_NAME: Joi.string(),
     CLOUDINARY_API_SECRET: Joi.string(),
+
+    ADMIN_USERNAME: Joi.string(),
+    ADMIN_PASSWORD: Joi.string(),
+    ADMIN_EMAIL: Joi.string().email(),
 });
 
-export const { value: env } = envSchema.validate({
+const { error, value: env } = envSchema.validate({
     NODE_ENV: process.env.NODE_ENV,
     PORT: process.env.PORT,
 
@@ -72,4 +76,14 @@ export const { value: env } = envSchema.validate({
     CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
     CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME,
     CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
+
+    ADMIN_USERNAME: process.env.ADMIN_USERNAME,
+    ADMIN_PASSWORD: process.env.ADMIN_PASSWORD,
+    ADMIN_EMAIL: process.env.ADMIN_EMAIL,
 });
+
+if (error) {
+    throw Error(error);
+}
+
+export { env };

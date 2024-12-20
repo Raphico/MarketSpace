@@ -1,5 +1,6 @@
 CREATE TYPE "public"."role" AS ENUM('user', 'admin');--> statement-breakpoint
 CREATE TYPE "public"."status" AS ENUM('pending', 'shipped', 'delivered');--> statement-breakpoint
+CREATE TYPE "public"."strategy" AS ENUM('google', 'email_password');--> statement-breakpoint
 CREATE TABLE "addresses" (
 	"id" varchar(25) PRIMARY KEY NOT NULL,
 	"address" varchar(255),
@@ -31,7 +32,8 @@ CREATE TABLE "categories" (
 	"id" varchar(25) PRIMARY KEY NOT NULL,
 	"name" varchar(255),
 	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp
+	"updated_at" timestamp,
+	CONSTRAINT "categories_name_unique" UNIQUE("name")
 );
 --> statement-breakpoint
 CREATE TABLE "order_items" (
@@ -119,13 +121,20 @@ CREATE TABLE "users" (
 	"first_name" varchar(50),
 	"last_name" varchar(50),
 	"email" varchar(255) NOT NULL,
-	"isEmailVerified" boolean DEFAULT true NOT NULL,
-	"password" varchar(255) NOT NULL,
+	"isEmailVerified" boolean DEFAULT false NOT NULL,
+	"password" varchar(255),
 	"image" text,
 	"role" "role" DEFAULT 'user' NOT NULL,
 	"stripe_customer_id" varchar(255),
+	"strategy" "strategy" DEFAULT 'email_password' NOT NULL,
+	"email_verification_token" varchar(64),
+	"password_reset_token" varchar(64),
+	"email_verification_expiry" timestamp,
+	"password_reset_expiry" timestamp,
 	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp
+	"updated_at" timestamp,
+	CONSTRAINT "users_username_unique" UNIQUE("username"),
+	CONSTRAINT "users_email_unique" UNIQUE("email")
 );
 --> statement-breakpoint
 ALTER TABLE "cart_items" ADD CONSTRAINT "cart_items_product_id_products_id_fk" FOREIGN KEY ("product_id") REFERENCES "public"."products"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint

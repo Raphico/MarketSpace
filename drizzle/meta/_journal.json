@@ -5,29 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1733840169797,
-      "tag": "0000_omniscient_shinko_yamashiro",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1734181750224,
-      "tag": "0001_wealthy_ulik",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1734213950093,
-      "tag": "0002_living_green_goblin",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1734521753370,
-      "tag": "0003_real_calypso",
+      "when": 1734709439064,
+      "tag": "0000_mean_wallow",
       "breakpoints": true
     }
   ]

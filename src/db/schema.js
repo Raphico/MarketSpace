@@ -13,7 +13,7 @@ import {
 } from "drizzle-orm/pg-core";
 
 export const statusEnum = pgEnum("status", ["pending", "shipped", "delivered"]);
-export const roleEnum = pgEnum("role", ["user", "moderator"]);
+export const roleEnum = pgEnum("role", ["user", "admin"]);
 export const strategyEnum = pgEnum("strategy", ["google", "email_password"]);
 
 const timestamps = {
@@ -101,7 +101,7 @@ export const carts = pgTable("carts", {
 
 export const categories = pgTable("categories", {
     id: varchar("id", { length: 25 }).$default(createId).primaryKey(),
-    name: varchar("name", { length: 255 }),
+    name: varchar("name", { length: 255 }).unique(),
     ...timestamps,
 });
 
