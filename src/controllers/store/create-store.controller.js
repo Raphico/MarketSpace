@@ -1,7 +1,4 @@
-import stream from "node:stream";
-import { v2 as cloudinary } from "cloudinary";
 import { eq } from "drizzle-orm";
-import { uploadFile } from "../../services/cloudinary.service.js";
 import {
     completeStoreSetupTemplate,
     sendEmail,
@@ -12,6 +9,7 @@ import { asyncHandler } from "../../utils/async-handler.js";
 import { storeSchema } from "../../validators/store.validator.js";
 import { db } from "../../db/index.js";
 import { categories, stores, users } from "../../db/schema.js";
+import { uploadStoreImages } from "./utils.js";
 
 export const createStore = asyncHandler(
     async function createStore(request, response) {
@@ -49,29 +47,7 @@ export const createStore = asyncHandler(
             }
         }
 
-        let bannerUrl;
-        if (request.files.banner) {
-            const readable = stream.Readable.from(
-                request.files.banner[0].buffer
-            );
-            const uploadResult = await uploadFile(readable);
-
-            bannerUrl = cloudinary.url(uploadResult.public_id, {
-                fetch_format: "auto",
-                quality: "auto",
-            });
-        }
-
-        let logoUrl;
-        if (request.files.logo) {
-            const readable = stream.Readable.from(request.files.logo[0].buffer);
-            const uploadResult = await uploadFile(readable);
-
-            logoUrl = cloudinary.url(uploadResult.public_id, {
-                fetch_format: "auto",
-                quality: "auto",
-            });
-        }
+        const { logoUrl, bannerUrl } = await uploadStoreImages(request);
 
         const store = await db
             .insert(stores)
