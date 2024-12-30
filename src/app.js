@@ -30,7 +30,7 @@ app.use(passport.initialize());
 
 app.use("/api/v1/health", healthRoute);
 app.use("/api/v1/auth", authRoute);
-app.use("/api/v1/user", userRoute);
-app.use("/api/v1/store", storeRoute);
+app.use("/api/v1/users", userRoute);
+app.use("/api/v1/stores", storeRoute);
 
 app.use(errorHandler);
