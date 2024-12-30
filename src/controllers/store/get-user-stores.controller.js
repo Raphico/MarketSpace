@@ -7,6 +7,9 @@ import { stores } from "../../db/schema.js";
 export const getUserStores = asyncHandler(
     async function getUserStores(request, response) {
         const userStores = await db.query.stores.findMany({
+            columns: {
+                stripeAccountId: false,
+            },
             where: eq(request.user.id, stores.userId),
         });
 
